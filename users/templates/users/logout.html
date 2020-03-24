@@ -1,0 +1,14 @@
+{% extends 'enninapp/base.html' %}
+
+{% block content %}
+
+<h2 style="text-align: center;">You have been logged out.</h2>
+<div style="text-align: center;">
+	<h3 class="text-muted">
+		<a href="{% url 'login' %}" style="color: #FFD700">Log In Again</a>
+	</h3>
+</div>
+
+
+
+{% endblock content %}

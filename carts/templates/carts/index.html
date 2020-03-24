@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Order-Summary GeTiT</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}"/>		
+	</head>
+
+	<body>
+		
+		<nav class="navbar" style="background-color: black; width: 100%">
+			<div class="container" style="width: 100%">
+				<!-- <a href="{% url 'enninapp_home' %}" style="color: white; font-size: 20px"><strong>GeTiT Shop</strong></a> -->
+				<h2><a href="{% url 'enninapp_home' %}" style="color: white; float: left;">GeTiT-Shop</a></h2>
+				<div style="float: right; width: 20%">
+
+					<div class="container minicart" style="float: right;"></div>
+				</div>
+			</div>
+		</nav>
+		
+		<div class="container-fluid breadcrumbBox text-center">
+
+			<h3 style="color: #00cfef"><strong>Order Summary</strong></h3>
+			<!-- <ol class="breadcrumb">
+				
+				<li ><a href="#" style="text-align: center;"><strong>Order Summary</strong></a></li>
+				
+			</ol> -->
+		</div>
+		
+		<!-- <div class="container text-center" style="width: 100%;">
+
+			
+			<div class="col-md-7 col-sm-12 text-left">
+				<ul>
+
+					<li class="row list-inline columnCaptions">
+						<span>Quantity</span>
+						<span style="padding-left: 8%">Product Name</span>
+						<span>Price</span>
+					</li>
+
+					
+					{% for order_item in objects.items.all %}
+					#{{ forloop.counter }}
+					<li class="row">
+						
+						
+						<span class="quantity">
+
+
+
+
+
+
+
+
+							<i class="fa fa-plus"></i>
+
+							{{order_item.quantity}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						</span>
+
+
+
+
+
+
+
+
+
+
+
+
+						<span class="itemName" style="padding-left: 8%">{{order_item.item.name}}</span>
+						<span class="popbtn"><a class="arrow"></a></span>
+						<span class="price" style="color: #727578">
+
+
+
+							{% if order_item.item.discount_price %}
+								Ghc {{order_item.get_total_discount_item_price}}
+							<div style="height: auto; width: auto; background-color: #00cfef; color: white; border-radius: 20px; padding-left: 5px; padding-right: 5px">	Saving Ghc {{ order_item.get_amount_saved }}</div>
+							{% else %}
+								Ghc {{order_item.get_total_item_price}}
+
+							{% endif %}
+
+
+						</span>
+					</li>
+
+					{% endfor %}
+					<br>
+
+
+
+
+
+					
+
+					
+					
+					
+					<li class="row totals">
+						<span class="itemName badge badge-primary" style="color: white; padding-bottom: 10px; padding-top: 10px; padding-left: 10px;margin-top: 30px; background-color: #00cfef" >Total: Ghc {{objects.get_total}}</span>
+
+
+						<span class="order"> <a href="{% url 'checkout_home' %}" class="text-center"  style="background-color: #00cfef"><strong>Proceed To Checkout</strong></a></span>
+							
+						
+						<span class="order"> <a href="{% url 'enninapp_home' %}" class="text-center"  style="background-color: #00cfef"><strong>Continue Shopping</strong></a></span>
+							
+					</li>
+						
+
+				</ul>
+			</div>
+
+
+
+
+
+		
+ -->
+
+
+			
+
+		<!-- The popover content -->
+
+		<!-- <div id="popover" style="display: none">
+			<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+			<a href="{{ order_item.get_remove_from_cart_url }}"><span class="glyphicon glyphicon-remove"></span></a>
+		</div> -->
+
+		<table class="table" style="width: 80%; margin-left: 10%; margin-top: -80px">
+			  <thead style="text-align: center;">
+			    <tr>
+			      <th scope="col"></th>
+			      <th scope="col">Product</th>
+			      <th scope="col" style="text-align: center;">Quantity</th>
+			      <th scope="col">Price</th>
+			    </tr>
+			 </thead>
+			<tbody>
+
+
+				{% for order_item in objects.items.all %}
+					
+
+
+			    <tr>
+			      <th scope="row">
+			      	#{{ forloop.counter }}
+			      </th>
+			      <td style="width: 40%">
+
+
+			      <img src="{{ order_item.item.image.url }}" style="width: 120px; height: 100px; margin-bottom: 5px; border-radius: 10%" >
+			      <br>
+
+			       <strong style="padding-left: 10px"> {{order_item.item.name}}</strong></td>
+			      <td style="width: 30%; text-align: center; padding-top: 40px" ><strong>{{order_item.quantity}}</strong></i></td>
+			      <td style="width: 30%; padding-top: 40px"><strong style="text-align: center; font-size: 16px;">
+			      	
+			      	{% if order_item.item.discount_price %}
+					Ghc {{order_item.get_total_discount_item_price}}
+						<span class="badge badge-primary" style="background-color: #00cfef; padding: 10px">
+							<b>Saving Ghc</b> {{ order_item.get_amount_saved }}
+						</span>
+					{% else %}
+						Ghc {{order_item.get_total_item_price}}
+
+					{% endif %}
+
+
+
+				</strong>
+				
+
+			      </td>
+			    </tr>
+			    {% empty %}
+			    <p style="text-align: center;">
+					<strong>Your Cart Is Empty</strong>
+			     </p>
+					
+				<tr>
+					<td>
+						<span class="order"> <a href="{% url 'enninapp_home' %}" class="text-center"  style="background-color: #00cfef; float: left; padding: 12px; border-radius: 20px; margin-left: 10%"><strong>Continue Shopping</strong></a></span>
+											
+					</td>
+				</tr>
+
+
+			    {% endfor %}
+			   
+			</tbody>
+		</table>
+		{% if objects.get_total %}
+		<table class="table" style=" margin-bottom: 100px;">
+			
+			<tr>
+				<td>
+					<span class="itemName badge badge-primary" style="color: black; padding-bottom: 10px; padding-top: 10px; padding-left: 10px; background-color: transparent; margin-left: 40%; margin-bottom: 40px" >Total: Ghc {{objects.get_total}}</span>
+
+					<br>
+
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					<span class="order"> <a href="{% url 'enninapp_home' %}" class="text-center"  style="background-color: #00cfef; float: left; padding: 12px; border-radius: 20px; margin-left: 10%"><strong>Continue Shopping</strong></a></span>
+							
+						
+					<span class="order"> <a href="{% url 'checkout_home' %}" class="text-center"  style="background-color: #00cfef; float: right;  padding: 12px; border-radius: 20px;  margin-right: 10%"><strong>Proceed To Checkout</strong></a></span>
+							
+				</td>
+			</tr>
+			
+		{% endif %}
+		</table>
+		
+
+		
+
+
+
+		<!-- JavaScript includes -->
+
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> 
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/customjs.js' %}"></script>
+
+	</body>
+</html>
