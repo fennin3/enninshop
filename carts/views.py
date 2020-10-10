@@ -19,8 +19,8 @@ class OrderSummaryView(LoginRequiredMixin, View):
 			}
 			return render(self.request, 'carts/index.html', context)
 		except ObjectDoesNotExist:
-			messages.erroe(self.request, "You do not have an active order")
-			return redirect("/")
+			messages.info(self.request, "You do not have an active order")
+			return redirect("/home")
 		
 
 
@@ -52,6 +52,7 @@ def add_to_cart(request, slug):
 	else:
 		ordered_date = timezone.now()
 		order = Order.objects.create(user=request.user, ordered_date=ordered_date)
+		order.save()
 		order.items.add(order_item)
 		messages.info(request, "This item was added to your cart.")
 
@@ -62,7 +63,7 @@ def add_to_cart(request, slug):
 def remove_from_cart(request, slug):
 	item = get_object_or_404(Product, slug=slug)
 	order_qs = Order.objects.filter(user=request.user, ordered=False)
-	if order_qs.exists():
+	if order_qs.exists(): 
 		order = order_qs[0]
 		#check if order item is in the order
 		if order.items.filter(item__slug=item.slug).exists():
@@ -83,9 +84,7 @@ def remove_from_cart(request, slug):
 		# add a message saying the user doesnt have an order
 		messages.info(request, "You do not have an active order.")
 		return redirect('product_detail', slug=slug)
-
-
-
+	
 
 
 class CheckoutView(LoginRequiredMixin, View):
@@ -96,8 +95,8 @@ class CheckoutView(LoginRequiredMixin, View):
 				'objects': order
 			}
 			return render(self.request, 'enninapp/checkout.html', context)
-		except ObjectDoesNotExist:
-			messages.erroe(self.request, "You do not have an active order")
+		except  :
+			messages.error(self.request, "You do not have an active order")
 			return redirect("/")
 
 

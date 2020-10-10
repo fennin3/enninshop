@@ -8,10 +8,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 
 
-
-
-
-
 class HomeView(ListView):
 	model = Product
 	template_name = 'enninapp/index.html'

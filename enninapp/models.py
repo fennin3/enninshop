@@ -40,8 +40,6 @@ class Product(models.Model):
 	image2 = models.FileField(default='default.jpg')
 	image3 = models.FileField(default='default.jpg')
 	is_active = models.BooleanField(default=True)
-	is_bestseller = models.BooleanField(default=False)
-	is_featured = models.BooleanField(default=False)
 	description = models.TextField()
 
 	meta_description = models.CharField("Meta Description", max_length=255, help_text='Content for description meta tag')
