@@ -27,8 +27,8 @@ class OrderSummaryView(LoginRequiredMixin, View):
 
 
 @login_required
-def add_to_cart(request, slug):
-	item = get_object_or_404(Product, slug=slug)
+def add_to_cart(request, id):
+	item = get_object_or_404(Product, id=id)
 	order_item, created = OrderItem.objects.get_or_create(
 		item=item,
 		user=request.user,
@@ -39,15 +39,15 @@ def add_to_cart(request, slug):
 	if order_qs.exists():
 		order = order_qs[0]
 		#check if order item is in the order
-		if order.items.filter(item__slug=item.slug).exists():
+		if order.items.filter(item__id=item.id).exists():
 			order_item.quantity += 1
 			order_item.save()
 			messages.info(request, "This item quantity was update.")
-			return redirect('product_detail', slug=slug)
+			return redirect('prod_detail', id=id)
 		else:
 			order.items.add(order_item)
 			messages.info(request, "This item was added to your cart.")
-			return redirect('product_detail', slug=slug)
+			return redirect('prod_detail', id=id)
 
 	else:
 		ordered_date = timezone.now()
@@ -56,17 +56,17 @@ def add_to_cart(request, slug):
 		order.items.add(order_item)
 		messages.info(request, "This item was added to your cart.")
 
-		return redirect('product_detail', slug=slug)
+		return redirect('prod_detail', id=id)
 
 
 @login_required
-def remove_from_cart(request, slug):
-	item = get_object_or_404(Product, slug=slug)
+def remove_from_cart(request, id):
+	item = get_object_or_404(Product, id=id)
 	order_qs = Order.objects.filter(user=request.user, ordered=False)
 	if order_qs.exists(): 
 		order = order_qs[0]
 		#check if order item is in the order
-		if order.items.filter(item__slug=item.slug).exists():
+		if order.items.filter(item__id=item.id).exists():
 			order_item =  OrderItem.objects.filter(
 				item=item,
 				user=request.user,
@@ -75,15 +75,15 @@ def remove_from_cart(request, slug):
 			)[0]
 			order.items.remove(order_item)
 			messages.info(request, "This item was removed from your cart.")
-			return redirect('product_detail', slug=slug)
+			return redirect('product_detail', id=id)
 		else:
 			messages.info(request, "This item was not in your cart.")
-			return redirect('product_detail', slug=slug)
+			return redirect('product_detail', id=id)
 		
 	else:
 		# add a message saying the user doesnt have an order
 		messages.info(request, "You do not have an active order.")
-		return redirect('product_detail', slug=slug)
+		return redirect('product_detail', id=id)
 	
 
 

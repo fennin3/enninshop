@@ -31,7 +31,7 @@ SECRET_KEY = '-6$a2qi%z^!k$!zn531te63*ib6*6_z4+!423p0n=vktem5xg='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 LOGIN_REDIRECT_URL = 'enninapp_home'
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'enninapp.context_processors.categories',
+                'enninapp.context_processors.order',
             ],
         },
     },

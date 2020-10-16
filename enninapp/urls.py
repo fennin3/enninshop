@@ -1,7 +1,12 @@
 from django.urls import path
-from .views import HomeView, ItemDetailView
+from . import views
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='enninapp_home'),
- 	path('product-detail/<slug>/', ItemDetailView.as_view(), name='product_detail')       
+    path('', views.home, name='enninapp_home'),
+    path('search-products/', views.searchresult, name="search"),
+    path('subscribe/', views.subscribe, name='subscribe'),
+    path('category/<int:id>/', views.cat_detail, name="cat_detail"),
+    path('product-detail/<int:id>/', views.prod_detail, name='prod_detail'),
+    path('brand/<int:id>/', views.brand_page, name='brand'),
+    path('contact-us/', views.contact_us, name='contact_us'),
 ]

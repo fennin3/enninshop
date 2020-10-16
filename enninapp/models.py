@@ -28,10 +28,20 @@ class Category(models.Model):
 
 
 
+class Brand(models.Model):
+	name = models.CharField(max_length=100)
+	image = models.FileField()
+
+	def __str__(self):
+		return self.name
+
+
+
+
 class Product(models.Model):
 	name = models.CharField(max_length=255, unique=True)
 	slug = models.SlugField(max_length = 50, unique=True, help_text='Unique value for product page URl, created from name.')
-	brand = models.CharField(max_length=50)
+	brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
 	price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
 	new_price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
 	quantity = models.IntegerField(default=1)
@@ -40,14 +50,14 @@ class Product(models.Model):
 	image2 = models.FileField(default='default.jpg')
 	image3 = models.FileField(default='default.jpg')
 	is_active = models.BooleanField(default=True)
+	is_featured = models.BooleanField(default=False)
 	description = models.TextField()
-
 	meta_description = models.CharField("Meta Description", max_length=255, help_text='Content for description meta tag')
 	meta_keywords = models.CharField("Meta keywords", max_length=255, help_text='comma-delimited set of SEO keywords for meta tag')
 	created_at = models.DateTimeField(auto_now_add=True)
 	Updated_at = models.DateTimeField(auto_now_add=True)
 	discount_price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
-	category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+	category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
 	
 
 
@@ -83,6 +93,12 @@ class Product(models.Model):
 
 
 		 
+class Subscriber(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        	return self.email
+
 
 
 
