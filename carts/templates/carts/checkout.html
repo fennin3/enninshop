@@ -1,0 +1,127 @@
+{% extends 'enninapp/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+    	<div class="order_summary d-none d-lg-block">
+    		<div class="row m-4" style="text-align: center;">
+    			<div class="col-3 ml-auto">
+    				<h4>Product</h4>
+    			</div>
+    			<div class="col-2">
+    				
+    			</div>
+    			<div class="col-2 mr-auto">
+    				<h4>Price</h4>
+    			</div>	
+    		</div>
+			<hr>
+    		
+
+			{% for item in objects.items.all %}
+			<div class="row ">
+
+    			<div class="col-3 ml-auto ">
+    				<div class="cart-img-product b-rad-4 o-f-hidden">
+						<img src="{{item.item.image.url}}" alt="IMG-PRODUCT">
+					</div>
+    			</div>
+    			<div class="col-2">
+    				{{item.item.name}}
+    			</div>
+    			<div class="col-2 mr-auto">
+    				{{item.get_total_item_price}}
+    			</div>
+    		</div>
+			<hr>
+    		{% endfor %}
+    	</div>
+		
+		
+			
+
+
+
+
+
+
+
+    	<!-- MOBILE VIEW -->
+
+    	<div class="order_summary d-lg-none">
+
+			<div class="row m-4">
+    			<div class="col-4 ml-auto" style="text-align: center;">
+    				<h4>Product</h4>
+    			</div>
+    			<div class="col-5">
+    				
+    			</div>
+    			<div class="col-2 mr-auto" style="text-align: center;">
+    				<h4>Price</h4>
+    			</div>
+    		</div>
+			<hr>
+
+    		{% for item in objects.items.all %}
+
+			<div class="row ">
+    			<div class="col-4 ml-auto ">
+    				<div class="cart-img-product b-rad-4 o-f-hidden">
+						<img src="{{item.item.image.url}}" alt="IMG-PRODUCT">
+					</div>
+    			</div>
+    			<div class="col-5">
+    				{{item.item.name}}
+    			</div>
+    			<div class="col-2 mr-auto">
+    				{{item.get_total_item_price}}
+    			</div>
+    		</div>
+			<hr>
+			{% endfor %}
+    		
+    	</div>
+
+    	<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm mb-3 brand">
+			<h5 class="m-text20 p-b-24">
+				Details
+			</h5>
+			<form>
+			  <label for="inputEmail4">Full Name</label>
+			  <input type="text" class="form-control border border-dark" value="{{user.username}}" id="inputEmail4" name="checkout_name" style="text-align: center;">
+			  <div class="m-4">
+			  	<p>Payment Method</p>
+			  	<input type="radio" id="male" name="gender" value="male">
+			  <label for="male">MOMO</label><br>
+			
+			  <input type="radio" id="other" name="gender" value="other">
+			  <label for="other">Credit Card</label>
+			  </div>
+			</form> 
+
+
+			<div class="flex-w flex-sb-m p-t-18 p-b-20">
+				<span class="m-text22 w-size19 w-full-sm">
+					Total:
+				</span>
+
+				<span class="m-text21 w-size20 w-full-sm">
+					${{objects.get_total}}
+				</span>
+			</div>
+
+			<div class="size15 trans-0-4">
+				<!-- Button -->
+				<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+					Make Payment
+				</button>
+			</div>
+		</div>
+	
+
+    </div>
+
+{% endblock content %}

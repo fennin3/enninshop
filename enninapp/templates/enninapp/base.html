@@ -37,6 +37,9 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <!--===============================================================================================-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body class="animsition">
 
@@ -106,9 +109,9 @@
 					{% csrf_token %}
 				      <input class="form-control mr-sm-2 border border-dark" type="search" placeholder="Search" aria-label="Search" name="search">
 				      <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-				    </form>
+				    </form>		
 			
-					<a href="#" class="header-wrapicon1 dis-block">
+					<a href="{% url 'profile' %}" class="header-wrapicon1 dis-block">
 						<img src="{% static 'images/icons/icon-header-01.png' %}" class="header-icon1" alt="ICON">
 					</a>
 
@@ -131,13 +134,20 @@
 										<div class="header-cart-item-txt">
 											<a href="#" class="header-cart-item-name">
 												{{item.item.name}}
+										
 											</a>
+											
 
 											<span class="header-cart-item-info">
 												{{item.quantity}} x $ {{item.item.price}}
 											</span>
 										</div>
+										<div class="ml-auto"> 
+											<a href="{% url 'remove_from_cart' item.item.id %}"><i class="fa fa-trash ml-auto" style="font-size: 22px; color: red;"></i></a>
+										</div>
+									
 									</li>
+									<hr>
 								
 								{% endfor %}
 
@@ -150,14 +160,14 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="{% url 'order_summary' %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="{% url 'checkout_home' orders.id %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>
@@ -274,14 +284,14 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="{% url 'order_summary' %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="{% url 'checkout_home' orders.id %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>
@@ -538,7 +548,7 @@
 			</a>
 
 			<div class="t-center s-text8 p-t-20">
-				Copyright © 2020 All rights reserved.
+				Copyright © 2020 All rights reserved. By RenninTech.
 			</div>
 		</div>
 	</footer>

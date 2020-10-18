@@ -1,0 +1,33 @@
+{% extends 'enninapp/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container" style="text-align: left;">
+	<h4 class="mt-4 mb-4">Account Overview</h4>
+
+	<div class="row" style="margin-left: auto; margin-right: auto;">
+		<div class="col-md-5 col-sm-12 col-lg-5 m-4 border mb-4 pb-3">
+			<h5 class="mt-2">Account Details <span style="float: right;"><a href=""><i class="fa fa-edit ml-auto" style="font-size: 22px; color: black;"></i></a></span></h5>
+			
+			<hr>
+			<p>{{user.username}}</p>
+			<p>{{user.email}}</p><br>
+			<a href=""><strong>Change Password</strong></a>
+		</div>
+
+		<div class="col-md-5 col-sm-12 col-lg-5 m-4 border mb-4 pb-3">
+			<h5 class="mt-2">Address <span style="float: right;"><a href=""><i class="fa fa-edit ml-auto" style="font-size: 22px; color: black;"></i></a></span></h5>
+			
+			<hr>
+			<p style="text-align: center;">No Address</p>
+		</div>
+
+		
+
+	</div>
+
+</div>
+
+{% endblock  %}

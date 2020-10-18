@@ -5,4 +5,8 @@ def categories(request):
 
 def order(request):
 	from carts.models import Order
-	return {'orders':Order.objects.get(user=request.user, ordered=False)}
+
+	try:
+		return {'orders':Order.objects.get(user=request.user, ordered=False)}
+	except Exception:
+		return {'orders':""}

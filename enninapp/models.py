@@ -10,6 +10,8 @@ class Category(models.Model):
 	meta_description = models.CharField("Meta Description", max_length=255, help_text='Content for description meta tag')
 	created_at = models.DateTimeField(auto_now_add=True)
 	Updated_at = models.DateTimeField(auto_now_add=True)
+	image = models.FileField(default='default.jpg')
+	cover = models.FileField(default='default.jpg')
 
 
 	class Meta:
@@ -31,6 +33,7 @@ class Category(models.Model):
 class Brand(models.Model):
 	name = models.CharField(max_length=100)
 	image = models.FileField()
+	cover = models.FileField(default='default.jpg')
 
 	def __str__(self):
 		return self.name

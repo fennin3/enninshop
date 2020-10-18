@@ -17,10 +17,10 @@ class OrderSummaryView(LoginRequiredMixin, View):
 			context = {
 				'objects': order
 			}
-			return render(self.request, 'carts/index.html', context)
+			return render(self.request, 'enninapp/cart.html', context)
 		except ObjectDoesNotExist:
 			messages.info(self.request, "You do not have an active order")
-			return redirect("/home")
+			return redirect("enninapp_home")
 		
 
 
@@ -43,11 +43,13 @@ def add_to_cart(request, id):
 			order_item.quantity += 1
 			order_item.save()
 			messages.info(request, "This item quantity was update.")
-			return redirect('prod_detail', id=id)
+			# return redirect('prod_detail', id=id)
+			return redirect(request.META['HTTP_REFERER'])
 		else:
 			order.items.add(order_item)
 			messages.info(request, "This item was added to your cart.")
-			return redirect('prod_detail', id=id)
+			# return redirect('prod_detail', id=id)
+			return redirect(request.META['HTTP_REFERER'])
 
 	else:
 		ordered_date = timezone.now()
@@ -56,7 +58,8 @@ def add_to_cart(request, id):
 		order.items.add(order_item)
 		messages.info(request, "This item was added to your cart.")
 
-		return redirect('prod_detail', id=id)
+		# return redirect('prod_detail', id=id)
+		return redirect(request.META['HTTP_REFERER'])
 
 
 @login_required
@@ -75,28 +78,32 @@ def remove_from_cart(request, id):
 			)[0]
 			order.items.remove(order_item)
 			messages.info(request, "This item was removed from your cart.")
-			return redirect('product_detail', id=id)
+			# return redirect('enninapp_home')
+			return redirect(request.META['HTTP_REFERER'])
 		else:
 			messages.info(request, "This item was not in your cart.")
-			return redirect('product_detail', id=id)
+			# return redirect('enninapp_home')
+			return redirect(request.META['HTTP_REFERER'])
 		
 	else:
 		# add a message saying the user doesnt have an order
 		messages.info(request, "You do not have an active order.")
-		return redirect('product_detail', id=id)
+		# return redirect('enninapp_home')
+		return redirect(request.META['HTTP_REFERER'])
 	
 
 
-class CheckoutView(LoginRequiredMixin, View):
-	def get(self, *args, **kwargs):
+def CheckoutView(request, id):
+    	
 		try:
-			order = Order.objects.get(user=self.request.user, ordered=False)
+			order = Order.objects.get(id=id)
 			context = {
 				'objects': order
 			}
-			return render(self.request, 'enninapp/checkout.html', context)
-		except  :
-			messages.error(self.request, "You do not have an active order")
+			return render(request, 'carts/checkout.html', context)
+		except Exception as e:
+			print(e)
+			messages.error(request, "You do not have an active order")
 			return redirect("/")
 
 
