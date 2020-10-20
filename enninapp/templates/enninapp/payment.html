@@ -1,0 +1,40 @@
+{% load static %}
+<form>
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <button type="button" onClick="makePayment()">Pay Now</button>
+</form>
+
+<script>
+  function makePayment() {
+    FlutterwaveCheckout({
+      public_key: "FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X",
+      tx_ref: "{{ref}}",
+      amount: {{objects.get_total}},
+      currency: "GHS",
+      country: "GH",
+      payment_options: "mobilemoneyghana",
+      redirect_url: // specified redirect URL
+        "{% url 'success' %}",
+      meta: {
+        consumer_id: {{user.id}},
+        consumer_mac: "92a3-912ba-1192a",
+      },
+      customer: {
+        email: "{{user.email}}",
+        phone_number: "08102909304",
+        name: "{{user.username}}",
+      },
+      callback: function (data) {
+        console.log(data);
+      },
+      onclose: function() {
+        // close modal
+      },
+      customizations: {
+        title: "GeTiT Shop",
+        description: "Payment for items in cart",
+        logo: "{% static 'images/icons/gt.png' %}",
+      },
+    });
+  }
+</script>

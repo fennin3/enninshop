@@ -2,9 +2,13 @@ from django import urls
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from .models import Product, Category, Subscriber, Brand
+from carts.models import Order
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from .filters import ProductFilter
+from django.conf import settings
+from enninapp.random_gen import get_random_string
+from django.utils import timezone
 
 class ItemDetailView(DetailView):
 	model = Product
@@ -16,13 +20,18 @@ def home(request):
     category = Category.objects.all()
     featured = Product.objects.filter(is_featured=True)
     brands = Brand.objects.all()
+    try:
+        latest = Product.objects.all()[:6]
+    except Exception:
+        latest = Product.objects.all()
 
 
     context = {
         'products': products,
         'category': category,
         'featured': featured,
-        'brands':brands
+        'brands':brands,
+        'latest':latest
     }
     return render(request, 'enninapp/index.html', context)
 
@@ -85,4 +94,34 @@ def brand_page(request, id):
 def contact_us(request):
     return render(request, 'enninapp/contact.html')
 
+def featured_product(request):
+    featured = Product.objects.filter(is_featured=True)
+    context = {
+        'featured':featured
+    }
+    return render(request, 'enninapp/featured.html', context)
 
+# def make_payment(request, id):
+#     ref = get_random_string(20)
+#     try:
+#         order = Order.objects.get(id=id)
+#         context = {
+#             'key':'FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X',
+#             'objects': order,
+#             'ref':ref
+#         }
+#         return render(request, 'enninapp/payment.html', context)
+#     except Exception as e:
+#         print(e)
+#         return redirect('/')
+
+
+def success(request, id):
+    order = Order.objects.get(id=id)
+    order.ordered = True
+    for item in order.items.all():
+        item.ordered = True
+        item.save()
+    order.ordered_date = timezone.now()
+    order.save()
+    return render(request, 'enninapp/success.html')

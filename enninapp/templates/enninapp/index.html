@@ -1,5 +1,9 @@
 {% extends 'enninapp/base.html' %}
 
+{% block title %}
+Home
+{% endblock title %}
+
 {% load static %}
 
 
@@ -103,12 +107,12 @@
 	</section>
 
 	<!-- New Product -->
-	<section class="newproduct bgwhite p-t-45 p-b-105">
+	<section class="newproduct bgwhite p-t-35 p-b-105">
 		<div class="container">
 			<div class="sec-title p-b-40">
-				<h3 class="m-text5 t-center">
+				<a href="{% url 'featured' %}"><h3 class="m-text5 t-center">
 					Featured Products
-				</h3>
+				</h3></a>
 			</div>
 
 			<!-- slide2 -->
@@ -154,6 +158,65 @@
 
 				</div>
 			</div>
+
+		</div>
+	</section>
+
+
+	{% comment %} LATEST PRODUCTS {% endcomment %}
+	<section class="newproduct bgwhite p-t-35 p-b-105">
+		<div class="container">
+			<div class="sec-title p-b-40">
+				<h3 class="m-text5 t-center">
+					Latest Products
+				</h3>
+			</div>
+
+			<div class="wrap-slick2">
+				<div class="slick2">
+
+					{% for item in latest %}
+					
+					<div class="item-slick2 p-l-15 p-r-15">
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+								<img src="{{item.image.url}}" alt="IMG-PRODUCT">
+
+								<div class="block2-overlay trans-0-4">
+									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+										<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+									</a>
+
+									<div class="block2-btn-addcart w-size1 trans-0-4">
+										<!-- Button -->
+										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											Add to Cart
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="block2-txt p-t-20">
+								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+									{{item.name}}
+								</a>
+
+								<span class="block2-price m-text6 p-r-5">
+									${{item.price}}
+								</span>
+							</div>
+						</div>
+					</div>
+
+					
+					{% endfor %}
+
+				</div>
+			</div>
+
+			
 
 		</div>
 	</section>
@@ -367,7 +430,7 @@
 	</section> {% endcomment %}
 
 	<!-- Instagram -->
-	<section class="instagram p-t-20">
+	{% comment %} <section class="instagram p-t-20">
 		<div class="sec-title p-b-52 p-l-15 p-r-15">
 			<h3 class="m-text5 t-center">
 				@ follow us on Instagram
@@ -485,7 +548,7 @@
 				</a>
 			</div>
 		</div>
-	</section>
+	</section> {% endcomment %}
 
 	<!-- Shipping -->
 	<section class="shipping bgwhite p-t-62 p-b-46">

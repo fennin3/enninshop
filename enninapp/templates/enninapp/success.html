@@ -1,0 +1,22 @@
+{% extends 'enninapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container mt-5 mb-5 d-none d-lg-block" style="text-align: center;">
+    	<div class="card brand pt-4 pb-4" style="margin-left: 200px; margin-right: 200px;">
+    		<h4 style=""><em>Payment Successful</em></h4>
+    		<h6 class="mt-3">We will reach out to you soon concerning your order, thank you.</h6>
+    	</div>
+    </div>
+
+	<div class="container mt-5 mb-5 d-lg-none" style="text-align: center;">
+    	<div class="card brand pt-4 pb-4">
+    		<h4 style=""><em>Payment Successful</em></h4>
+    		<h6 class="mt-3">We will reach out to you soon concerning your order, thank you.</h6>
+    	</div>
+    </div>
+
+{% endblock content %}
+
+

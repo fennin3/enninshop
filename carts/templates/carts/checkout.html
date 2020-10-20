@@ -90,38 +90,75 @@
 				Details
 			</h5>
 			<form>
-			  <label for="inputEmail4">Full Name</label>
-			  <input type="text" class="form-control border border-dark" value="{{user.username}}" id="inputEmail4" name="checkout_name" style="text-align: center;">
-			  <div class="m-4">
-			  	<p>Payment Method</p>
-			  	<input type="radio" id="male" name="gender" value="male">
-			  <label for="male">MOMO</label><br>
-			
-			  <input type="radio" id="other" name="gender" value="other">
-			  <label for="other">Credit Card</label>
-			  </div>
+				<script src="https://checkout.flutterwave.com/v3.js"></script>
+				<label for="inputEmail4">Full Name</label>
+				<input type="text" class="form-control border border-dark" value="{{user.first_name}} {{user.last_name}}" id="inputEmail4" name="checkout_name" style="text-align: center;">
+				{% comment %} <div class="m-4">
+					<p>Payment Method</p>
+					<input type="radio" id="male" name="gender" value="male">
+				<label for="male">MOMO</label><br>
+				
+				<input type="radio" id="other" name="gender" value="other">
+				<label for="other">Credit Card</label>
+				</div> {% endcomment %}
+
+			  	<div class="flex-w flex-sb-m p-t-18 p-b-20">
+					<span class="m-text22 w-size19 w-full-sm">
+						Total:
+					</span>
+
+					<span class="m-text21 w-size20 w-full-sm">
+						${{objects.get_total}}
+					</span>
+				</div>
+
+				<div class="size15 trans-0-4">
+					<!-- Button -->
+					<button type="button" onClick="makePayment()" class="btn btn-dark">Pay Now</button>
+				</div>
 			</form> 
 
 
-			<div class="flex-w flex-sb-m p-t-18 p-b-20">
-				<span class="m-text22 w-size19 w-full-sm">
-					Total:
-				</span>
-
-				<span class="m-text21 w-size20 w-full-sm">
-					${{objects.get_total}}
-				</span>
-			</div>
-
-			<div class="size15 trans-0-4">
-				<!-- Button -->
-				<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-					Make Payment
-				</button>
-			</div>
+			
 		</div>
 	
 
     </div>
+
+
+	<script>
+  function makePayment() {
+    FlutterwaveCheckout({
+      public_key: "FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X",
+      tx_ref: "{{ref}}",
+      amount: {{objects.get_total}},
+      currency: "GHS",
+      country: "GH",
+      payment_options: "mobilemoneyghana",
+      redirect_url: // specified redirect URL
+        "{% url 'success' objects.id %}",
+      meta: {
+        consumer_id: {{user.id}},
+        consumer_mac: "92a3-912ba-1192a",
+      },
+      customer: {
+        email: "{{user.email}}",
+        phone_number: "08102909304",
+        name: "{{user.first_name}} {{user.last_name}}",
+      },
+      callback: function (data) {
+        console.log(data);
+      },
+      onclose: function() {
+        // close modal
+      },
+      customizations: {
+        title: "GeTiT Shop",
+        description: "Payment for items in cart",
+        logo: "{% static 'images/icons/gt.png' %}",
+      },
+    });
+  }
+</script>
 
 {% endblock content %}

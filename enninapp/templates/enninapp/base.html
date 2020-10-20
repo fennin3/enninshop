@@ -4,7 +4,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Home</title>
+	<title>{% block title %}
+	
+	{% endblock title %}</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -39,6 +41,7 @@
 <!--===============================================================================================-->
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 
 </head>
 <body class="animsition">
@@ -89,7 +92,7 @@
 							</li>
 
 							<li>
-								<a href="">Shop</a>
+								<a href="">Shops</a>
 							</li>
 
 							<li>
@@ -167,9 +170,19 @@
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
+									{% if orders.id %}
+
 									<a href="{% url 'checkout_home' orders.id %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
+
+									{% else %}
+
+									<a href="" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+									
+									{% endif %}
 								</div>
 							</div>
 						</div>
@@ -243,38 +256,6 @@
 								</li>
 								
 								{% endfor %}
-
-								{% comment %} <li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="{% static 'images/item-cart-02.jpg' %}" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="{% static 'images/item-cart-03.jpg' %}" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li> {% endcomment %}
 							</ul>
 
 							<div class="header-cart-total">
@@ -291,9 +272,23 @@
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
+									{% if orders.id %}
+
 									<a href="{% url 'checkout_home' orders.id %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
+
+									{% else %}
+
+									<a href="" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+									
+									{% endif %}
+
+
+									
+
 								</div>
 							</div>
 						</div>

@@ -7,6 +7,7 @@ from enninapp.models import Product
 from .models import Order, OrderItem
 from django.utils import timezone
 from django.views.generic import View
+from enninapp.random_gen import get_random_string
 	
 
  
@@ -76,7 +77,7 @@ def remove_from_cart(request, id):
 				ordered=False
 
 			)[0]
-			order.items.remove(order_item)
+			order_item.delete()
 			messages.info(request, "This item was removed from your cart.")
 			# return redirect('enninapp_home')
 			return redirect(request.META['HTTP_REFERER'])
@@ -92,19 +93,20 @@ def remove_from_cart(request, id):
 		return redirect(request.META['HTTP_REFERER'])
 	
 
-
-def CheckoutView(request, id):
-    	
-		try:
-			order = Order.objects.get(id=id)
-			context = {
-				'objects': order
-			}
-			return render(request, 'carts/checkout.html', context)
-		except Exception as e:
-			print(e)
-			messages.error(request, "You do not have an active order")
-			return redirect("/")
+@login_required
+def CheckoutView(request, id):	
+	try:
+		ref = get_random_string(20)
+		order = Order.objects.get(id=id)
+		context = {
+			'objects': order,
+			'key':'FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X',
+			'ref':ref
+		}
+		return render(request, 'carts/checkout.html', context)
+	except ObjectDoesNotExist:
+		messages.error(request, "You do not have an active order")
+		return redirect("/")
 
 
 
