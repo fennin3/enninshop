@@ -1,14 +1,16 @@
 from django import urls
+from django.db.models import query
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from .models import Product, Category, Subscriber, Brand
-from carts.models import Order
+from carts.models import Order, OrderedItem
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from .filters import ProductFilter
 from django.conf import settings
 from enninapp.random_gen import get_random_string
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 class ItemDetailView(DetailView):
 	model = Product
@@ -38,15 +40,36 @@ def home(request):
 
 
 def searchresult(request):
+    query = ""
     if request.method == "POST":
         query = request.POST.get('search', None)
     if query:
-        products = Product.objects.filter(name__icontains=query)
+        prod = Product.objects.filter(name__icontains=query)
+        products = Paginator(prod, 20)
+
     else:
-        products = Product.objects.all()
+        prod = Product.objects.all()
+        products = Paginator(prod, 20)
+    
+    page_number = request.GET.get('page')
+    page_obj = products.get_page(page_number)
+    
     context = {
-    	'products': products,
+    	'products': page_obj,
 		'query':query
+    }
+    
+    return render(request, 'enninapp/search_results.html', context)
+
+
+def shop(request):
+    prod = Product.objects.all()
+    products = Paginator(prod, 20)
+    page_number = request.GET.get('page')
+    page_obj = products.get_page(page_number)
+    
+    context = {
+    	'products': page_obj,
     }
     print(query)
     return render(request, 'enninapp/search_results.html', context)
@@ -64,9 +87,13 @@ def subscribe(request):
 
 def cat_detail(request, id):
     cat = Category.objects.get(id=id)
+    cat_products = Paginator(cat.products.all(), 20)
+    page_number = request.GET.get('page')
+    page_obj = cat_products.get_page(page_number)
 
     context = {
-        'cat':cat,
+        'cat':page_obj,
+        'category_':cat
     }
 
     return render(request, 'enninapp/product.html', context)
@@ -101,20 +128,6 @@ def featured_product(request):
     }
     return render(request, 'enninapp/featured.html', context)
 
-# def make_payment(request, id):
-#     ref = get_random_string(20)
-#     try:
-#         order = Order.objects.get(id=id)
-#         context = {
-#             'key':'FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X',
-#             'objects': order,
-#             'ref':ref
-#         }
-#         return render(request, 'enninapp/payment.html', context)
-#     except Exception as e:
-#         print(e)
-#         return redirect('/')
-
 
 def success(request, id):
     order = Order.objects.get(id=id)
@@ -124,4 +137,14 @@ def success(request, id):
         item.save()
     order.ordered_date = timezone.now()
     order.save()
+
+    ordered_item = OrderedItem.objects.create(
+        user = order.user,
+        ordered_date = timezone.now(),
+        address = order.user.profile.address,
+        phonenumber = order.user.profile.phone_number,
+    )
+    ordered_item.save()
+    for i in order.items.all():
+        ordered_item.items.add(i)
     return render(request, 'enninapp/success.html')

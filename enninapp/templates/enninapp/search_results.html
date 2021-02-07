@@ -7,7 +7,7 @@
 
 
 	<!-- Title Page -->
-	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url({% static 'images/heading-pages-02.jpg' %});">
+	{% comment %} <section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url({% static 'images/heading-pages-02.jpg' %});">
 		<h2 class="l-text2 t-center">
 			Women
 		</h2>
@@ -15,51 +15,26 @@
 			New Arrivals Women Collection 2018
 		</p>
 	</section>
-
+ {% endcomment %}
 
 	<!-- Content page -->
-	<section class="bgwhite p-t-55 p-b-65">
+	<section class="bgwhite p-b-65">
 		<div class="container">
 			<div class="row">
 
 
 
 
-				<div class="col-sm-12 col-md-12 col-lg-12 p-b-50">
+				<div class="col-sm-12 col-md-12 col-lg-12 p-b-20">
 					<!--  -->
 					<div class="flex-sb-m flex-w p-b-35">
-
-
-						{% comment %} <div class="flex-w">
-							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-								<select class="selection-2" name="sorting">
-									<option>Default Sorting</option>
-									<option>Popularity</option>
-									<option>Price: low to high</option>
-									<option>Price: high to low</option>
-								</select>
-							</div>
-
-							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-								<select class="selection-2" name="sorting">
-									<option>Price</option>
-									<option>$0.00 - $50.00</option>
-									<option>$50.00 - $100.00</option>
-									<option>$100.00 - $150.00</option>
-									<option>$150.00 - $200.00</option>
-									<option>$200.00+</option>
-
-								</select>
-							</div>
-						</div> {% endcomment %}
-
-							
-
-                        <div><h4><em>Results for {{query}}...</em></h4></div>
-
+						{% if query %}
+                        <div><h4><em>Results for {{query}}..</em></h4></div>
+						{% endif %}
 						<span class="s-text8 p-t-5 p-b-5 ml-auto">
-							Showing 1–12 of 16 results
+							Showing {{ products.number }} of {{ products.paginator.num_pages }} result(s)
 						</span>
+						
 					</div>
 
 					<!-- Product -->
@@ -71,7 +46,7 @@
                     {% for item in products %}
 					
 					
-						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+						<div class="col-sm-12 col-md-4 col-lg-3 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
@@ -85,9 +60,11 @@
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
 											<!-- Button -->
+											<a href="{% url 'add_to_cart' item.id %}">
 											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
 												Add to Cart
 											</button>
+											</a>
 										</div>
 									</div>
 								</div>
@@ -118,8 +95,16 @@
 
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">
-						<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+						{% if products.has_previous %}
+							<a href="?page=1" class="item-pagination flex-c-m trans-0-4 active-pagination mr-4">first</a>
+							<a href="?page={{ products.previous_page_number }}" class="mr-4">previous</a>
+						{% endif %}
+						
+						{% if  products.has_next %}
+							<a href="?page={{ products.next_page_number }}" class="item-pagination flex-c-m trans-0-4 mr-4">next</a>
+						
+            				<a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>

@@ -16,7 +16,7 @@ Home
 			<div class="slick1">
 				<div class="item-slick1 item1-slick1" style="background-image: url({% static 'images/master-slide-02.jpg' %});">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
+						{% comment %} <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
 							Women Collection 2018
 						</span>
 
@@ -29,12 +29,12 @@ Home
 							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
 								Shop Now
 							</a>
-						</div>
+						</div> {% endcomment %}
 					</div>
 				</div>
 
 				<div class="item-slick1 item2-slick1" style="background-image: url({% static 'images/master-slide-03.jpg' %});">
-					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+					{% comment %} <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
 							Women Collection 2018
 						</span>
@@ -49,11 +49,11 @@ Home
 								Shop Now
 							</a>
 						</div>
-					</div>
+					</div> {% endcomment %}
 				</div>
 
 				<div class="item-slick1 item3-slick1" style="background-image: url({% static 'images/master-slide-04.jpg' %});">
-					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+					{% comment %} <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
 							Women Collection 2018
 						</span>
@@ -68,7 +68,7 @@ Home
 								Shop Now
 							</a>
 						</div>
-					</div>
+					</div> {% endcomment %}
 				</div>
 
 			</div>
@@ -164,7 +164,8 @@ Home
 
 
 	{% comment %} LATEST PRODUCTS {% endcomment %}
-	<section class="newproduct bgwhite p-t-35 p-b-105">
+	
+	<section class="newproduct bgwhite p-t-35 p-b-70">
 		<div class="container">
 			<div class="sec-title p-b-40">
 				<h3 class="m-text5 t-center">
@@ -191,15 +192,17 @@ Home
 
 									<div class="block2-btn-addcart w-size1 trans-0-4">
 										<!-- Button -->
+										<a href="{% url 'add_to_cart' item.id %}">
 										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
 											Add to Cart
 										</button>
+										</a>
 									</div>
 								</div>
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="{% url 'prod_detail' item.id %}" class="block2-name dis-block s-text3 p-b-5">
 									{{item.name}}
 								</a>
 
@@ -226,7 +229,7 @@ Home
 
 	<!-- Brand -->
 
-	<section class="newproduct bgwhite p-t-45 p-b-105">
+	{% comment %} <section class="newproduct bgwhite p-t-45 p-b-105">
 		<div class="container">
 			<div class="sec-title p-b-40">
 				<h3 class="m-text5 t-center">
@@ -248,12 +251,12 @@ Home
 			</div>
 
 		</div>
-	</section>
+	</section> {% endcomment %}
 
 	
 
 	<!-- Banner2 -->
-	<section class="banner2 bg5 p-t-55 p-b-55">
+	{% comment %} <section class="banner2 bg5 p-t-55 p-b-55">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-10 col-md-8 col-lg-6 m-l-r-auto p-t-15 p-b-15">
@@ -342,7 +345,7 @@ Home
 			</div>
 		</div>
 	</section>
-
+ {% endcomment %}
 
 	<!-- Blog -->
 	{% comment %} <section class="blog bgwhite p-t-94 p-b-65">
@@ -551,11 +554,11 @@ Home
 	</section> {% endcomment %}
 
 	<!-- Shipping -->
-	<section class="shipping bgwhite p-t-62 p-b-46">
+	<section class="shipping bgwhite p-t-0 p-b-46">
 		<div class="flex-w p-l-15 p-r-15">
 			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
 				<h4 class="m-text12 t-center">
-					Free Delivery Nationwsluge
+					Free Delivery Nationwide
 				</h4>
 
 				<a href="" class="s-text11 t-center">

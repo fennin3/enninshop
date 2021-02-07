@@ -10,14 +10,14 @@ Cart
 
 	
 	<!-- Title Page -->
-	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url({% static 'images/heading-pages-01.jpg' %});">
+	<!-- <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url({% static 'images/heading-pages-01.jpg' %});">
 		<h2 class="l-text2 t-center">
 			Cart
 		</h2>
-	</section>
+	</section> -->
 
 	<!-- Cart -->
-	<section class="cart bgwhite p-t-70 p-b-100">
+	<section class="cart bgwhite p-t-30 p-b-100 d-none d-lg-block">
 		<div class="container">
 			<!-- Cart item -->
 			<div class="container-table-cart pos-relative">
@@ -44,15 +44,18 @@ Cart
 							<td class="column-3">${{item.item.price}}</td>
 							<td class="column-4">
 								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
+								<a href="{% url 'subproduct' item.item.id %}">
+									<button class="color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 									</button>
+								<a/>
 
 									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="{{item.quantity}}">
 
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
+									<a href="{% url 'add_to_cart' item.item.id %}">
+									<button class=" color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
+									</button></a>
 								</div>
 							</td>
 							<td class="column-5">${{item.get_total_item_price}}</td>
@@ -85,12 +88,68 @@ Cart
 					</span>
 				</div>
 
-				<div class="size15 trans-0-4">
+				<a href="{% url 'checkout_home' objects.id %}"><div class="size15 trans-0-4">
 					<!-- Button -->
 					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
 						Proceed to Checkout
 					</button>
+				</div></a>
+			</div>
+		</div>
+	</section>
+
+	<section class="cart bgwhite border d-lg-none">
+		<div class="container">
+			<div class="col">
+				{% for item in objects.items.all %}
+				<div class="col">
+					<div class="row">
+					
+						<div class="col-6">
+							<img src="{{item.item.image.url}}" alt="IMG-PRODUCT" height="100px;" width="130px">
+						</div>
+						<div class="col-6">
+							<p class="mt-2" style="text-align: justify;">{{item.item.name}}</p>
+							<hr>
+							<strong>Ghc {{item.get_total_item_price}}</strong>
+						</div>
+				
+					</div>
+					
+					<div class="row mt-3">
+						<div class="col">
+							<div class="flex-w bo5 of-hidden w-size17">
+								<a href="{% url 'subproduct' item.item.id %}">
+									<button class="color1 flex-c-m size7 bg8 eff2">
+										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+									</button>
+								<a/>
+
+									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="{{item.quantity}}">
+
+									<a href="{% url 'add_to_cart' item.item.id %}">
+									<button class=" color1 flex-c-m size7 bg8 eff2">
+										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+									</button></a>
+							</div>
+						</div>
+						<div class="col">
+							<a href="{% url 'remove_from_cart' item.item.id %}"><i class="fa fa-trash ml-5 mt-2" style="font-size: 25px; color: red;">	</i></a>
+						</div>
+					</div>
+
 				</div>
+				<hr>
+				{% endfor %}
+
+				<div class="mt-4 m-2 border p-3" style="text-align: center;">
+					<h5 ><b>Cart Summary</b></h5>
+					<hr>
+					<h6><b>Total: Ghc {{objects.get_total}}</b></h6>
+	
+					<a href="{% url 'checkout_home' objects.id %}"><button class="btn btn-dark mt-3">Proceed to Checkout</button></a>
+				</div>
+				
 			</div>
 		</div>
 	</section>

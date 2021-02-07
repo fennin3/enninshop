@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='enninapp_home'),
     path('search-products/', views.searchresult, name="search"),
+    path('shop/', views.shop, name="shop"),
     path('subscribe/', views.subscribe, name='subscribe'),
     path('category/<int:id>/', views.cat_detail, name="cat_detail"),
     path('product-detail/<int:id>/', views.prod_detail, name='prod_detail'),

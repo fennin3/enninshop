@@ -6,11 +6,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
 
-
-
-
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
@@ -32,7 +27,6 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
          name='password_reset_confirm'),
     path('', include('enninapp.urls')),
-
     
 ]
 

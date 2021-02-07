@@ -1,6 +1,7 @@
 {% extends 'enninapp/base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -54,13 +55,13 @@
 
 			<div class="row m-4">
     			<div class="col-4 ml-auto" style="text-align: center;">
-    				<h4>Product</h4>
+    				<h5>Product</h5>
     			</div>
     			<div class="col-5">
     				
     			</div>
     			<div class="col-2 mr-auto" style="text-align: center;">
-    				<h4>Price</h4>
+    				<h5>Price</h5>
     			</div>
     		</div>
 			<hr>
@@ -84,24 +85,32 @@
 			{% endfor %}
     		
     	</div>
+		{% if user.profile.address and  user.profile.phone_number %}
+		<div class="p-2 card shadow">
+			<strong>Your Details:</strong>
+			<h6 class="mb-2">Address:<small> {{user.profile.address}}</small></h6>
+			<h6>Phone Number: <small>{{user.profile.phone_number}}</small></h6>
+			<a href="{% url 'profile_edit' objects.id %}"><button class="btn btn-dark mt-4">Edit</button></a>
+		</div>
+
+		{% else %}
+		<h5 class="mb-2">Please add your address</h5>	
+		<div style="background-color: rgba(0,0,0,0.2);" class="p-2">
+			<form action="", method='POST'>
+			{% csrf_token %}
+			{{form|crispy}}
+			<button type="submit" class="btn btn-dark">Save</button>
+			</form>	
+		</div>
+		{% endif %}
 
     	<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm mb-3 brand">
 			<h5 class="m-text20 p-b-24">
 				Details
 			</h5>
-			<form>
-				<script src="https://checkout.flutterwave.com/v3.js"></script>
-				<label for="inputEmail4">Full Name</label>
-				<input type="text" class="form-control border border-dark" value="{{user.first_name}} {{user.last_name}}" id="inputEmail4" name="checkout_name" style="text-align: center;">
-				{% comment %} <div class="m-4">
-					<p>Payment Method</p>
-					<input type="radio" id="male" name="gender" value="male">
-				<label for="male">MOMO</label><br>
+			 <form>
+				<script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
 				
-				<input type="radio" id="other" name="gender" value="other">
-				<label for="other">Credit Card</label>
-				</div> {% endcomment %}
-
 			  	<div class="flex-w flex-sb-m p-t-18 p-b-20">
 					<span class="m-text22 w-size19 w-full-sm">
 						Total:
@@ -114,9 +123,14 @@
 
 				<div class="size15 trans-0-4">
 					<!-- Button -->
-					<button type="button" onClick="makePayment()" class="btn btn-dark">Pay Now</button>
+					<button type="button" onClick="payWithRave()" class="btn btn-dark">Pay Now</button>
 				</div>
-			</form> 
+			</form>  
+			{% comment %} <form>
+				<script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+				<h3>SUPPORT NATURE WITH AS LOW AS $1</h3>
+				<button type="button" onClick="payWithRave()">Donate Here</button>
+			</form> {% endcomment %}
 
 
 			
@@ -126,29 +140,39 @@
     </div>
 
 
-	<script>
-  function makePayment() {
+	{% comment %} <script>
+   function makePayment() {
     FlutterwaveCheckout({
-      public_key: "FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X",
+      public_key: "{{key}}",
       tx_ref: "{{ref}}",
       amount: {{objects.get_total}},
       currency: "GHS",
       country: "GH",
       payment_options: "mobilemoneyghana",
-      redirect_url: // specified redirect URL
-        "{% url 'success' objects.id %}",
+ 
       meta: {
         consumer_id: {{user.id}},
         consumer_mac: "92a3-912ba-1192a",
       },
       customer: {
         email: "{{user.email}}",
-        phone_number: "08102909304",
+        phone_number: "{{user.profile.phone_number}}",
         name: "{{user.first_name}} {{user.last_name}}",
       },
-      callback: function (data) {
-        console.log(data);
-      },
+      callback: function(response) {
+					var txref = response.tx.txRef;
+					console.log("This is the response returned after a charge", response);
+					if (
+						response.tx.chargeResponseCode == "00" ||
+						response.tx.chargeResponseCode == "0"
+					) {
+						document.location.href = "{% url 'success' objects.id %}"
+							
+					} else {
+						document.location.href = "{% url 'enninapp_home' %}"
+					}
+					x.close();
+				},
       onclose: function() {
         // close modal
       },
@@ -159,6 +183,37 @@
       },
     });
   }
-</script>
+</script>  {% endcomment %}
+
+ <script>
+        const publicKey = "{{ key }}";
+
+        function  payWithRave() {
+            var x = getpaidSetup({
+                PBFPubKey: publicKey,
+                customer_email: "{{user.email}}",
+                amount: {{objects.get_total}},
+                customer_phone: "{{user.profile.phone_number}}",
+                currency: "GHS",
+                txref: "{{ref}}",
+                custom_title: "Dabiara Shop",
+                onclose: function() {},
+                callback: function(response) {
+					var txref = response.tx.txRef;
+					console.log("This is the response returned after a charge", response);
+					if (
+						response.tx.chargeResponseCode == "00" ||
+						response.tx.chargeResponseCode == "0"
+					) {
+						document.location.href = "{% url 'success' objects.id %}"
+							// redirect to a success page
+					} else {
+						
+					}
+					x.close();
+				}
+            });
+        }
+    </script>
 
 {% endblock content %}

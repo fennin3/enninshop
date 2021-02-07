@@ -41,7 +41,7 @@ class  Order(models.Model):
 
 
 	def __str__(self):
-		return self.user.username
+		return f"Order by {self.user.username}"
 
 
 
@@ -50,4 +50,13 @@ class  Order(models.Model):
 		for order_item in self.items.all():
 			total += order_item.get_total_item_price()
 		return total
+
+
+class OrderedItem(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	items = models.ManyToManyField(OrderItem)
+	ordered_date = models.DateTimeField(auto_now_add=True)
+	address = models.CharField(max_length=200)
+	phonenumber = models.CharField(max_length=15, blank=True, null=True)
+	delivered = models.BooleanField(default=False)
 

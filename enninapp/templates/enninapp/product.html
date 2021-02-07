@@ -11,13 +11,11 @@
 
 
 	<!-- Title Page -->
-	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url({{cat.cover.url}});">
+	<section class="bg-title-page p-t-20 p-b-40 flex-col-c-m" style="background-image: url({{category_.cover.url}});">
 		<h2 class="l-text2 t-center">
-			Women
+			{{category_.name}}
 		</h2>
-		<p class="m-text13 t-center">
-			New Arrivals Women Collection 2018
-		</p>
+		
 	</section>
 
 
@@ -56,7 +54,7 @@
 						</div> {% endcomment %}
 
 						<span class="s-text8 p-t-5 p-b-5 ml-auto">
-							Showing 1–12 of 16 results
+							Showing {{ cat.number }} of {{ cat.paginator.num_pages }} results
 						</span>
 					</div>
 
@@ -64,10 +62,10 @@
 
 					<!-- Product -->
 					<div class="row">
-					{% for item in cat.products.all %}
+					{% for item in cat %}
 					
 					
-						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+						<div class="col-sm-12 col-md-4 col-lg-3 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
@@ -81,9 +79,11 @@
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
 											<!-- Button -->
+											<a href="{% url 'add_to_cart' item.id %}">
 											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
 												Add to Cart
 											</button>
+											</a>
 										</div>
 									</div>
 								</div>
@@ -113,8 +113,16 @@
 
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">
-						<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+						{% if cat.has_previous %}
+							<a href="?page=1" class="item-pagination flex-c-m trans-0-4 active-pagination mr-4">first</a>
+							<a href="?page={{ cat.previous_page_number }}" class="mr-4">previous</a>
+						{% endif %}
+						
+						{% if  cat.has_next %}
+							<a href="?page={{ cat.next_page_number }}" class="item-pagination flex-c-m trans-0-4 mr-4">next</a>
+						
+            				<a href="?page={{ cat.paginator.num_pages }}">last &raquo;</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>

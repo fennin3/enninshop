@@ -16,6 +16,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +32,7 @@ SECRET_KEY = '-6$a2qi%z^!k$!zn531te63*ib6*6_z4+!423p0n=vktem5xg='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = 'enninapp_home'
 
@@ -51,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_filters'
+    'django_filters', 
+    'storages',  
 ]
 
 MIDDLEWARE = [
@@ -177,6 +179,13 @@ LOGGING = {
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -199,5 +208,19 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 90
 
-RAVE_PUBLIC_KEY = 'FLWPUBK_TEST-070399e72975cc67ce8492c0b014cd0d-X'
-RAVE_SECRET_KEY = 'FLWSECK_TEST-8ecd664fe88aafb2900ad4b87435ca64-X'
+RAVE_PUBLIC_KEY = 'FLWPUBK_TEST-d977fbc762618af47882f330bac9d5ae-X'
+RAVE_SECRET_KEY = 'FLWSECK_TEST-e6ab465f2e33d3bfd33561a4a70716fa-X'
+
+# RAVE_PUBLIC_KEY = 'FLWPUBK-1de70a3c6c8ce55a5f66f81db4a01c0a-X'
+# RAVE_SECRET_KEY = 'FLWSECK-51a17cc515e6a35f6de126878ef713a8-X'
+
+
+AWS_ACCESS_KEY_ID = 'AKIA3IFWRAQDV7QUH5VX'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'dabiara-shop'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+django_heroku.settings(locals())
