@@ -17,6 +17,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import django_heroku
+import environ
+
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -214,9 +220,12 @@ RAVE_SECRET_KEY = 'FLWSECK_TEST-e6ab465f2e33d3bfd33561a4a70716fa-X'
 # RAVE_PUBLIC_KEY = 'FLWPUBK-1de70a3c6c8ce55a5f66f81db4a01c0a-X'
 # RAVE_SECRET_KEY = 'FLWSECK-51a17cc515e6a35f6de126878ef713a8-X'
 
+s3_access = env("s3_access")
+s3_secret = env("s3_secret")
 
-AWS_ACCESS_KEY_ID = 'AKIA3IFWRAQDV7QUH5VX'
-AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_ACCESS_KEY_ID = s3_access
+AWS_SECRET_ACCESS_KEY = s3_secret
 AWS_STORAGE_BUCKET_NAME = 'dabiara-shop'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
