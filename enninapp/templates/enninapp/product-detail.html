@@ -31,7 +31,7 @@
 	</div> {% endcomment %}
 
 	<!-- Product Detail -->
-	<div class="container bgwhite p-t-35 p-b-40 d-none d-lg-block">
+	<div class="container bgwhite p-t-35 p-b-20 d-none d-lg-block">
 		<div class="flex-w flex-sb">
 			<div class="w-size13 p-t-30 respon5">
 				<div class="wrap-slick3 flex-sb flex-w">
@@ -71,7 +71,7 @@
 				
 
 				<!--  -->
-				<div class="p-t-33 p-b-60">
+				<div class="p-t-33 p-b-30">
 					{% comment %} <div class="flex-m flex-w p-b-10">
 						<div class="s-text15 w-size15 t-center">
 							Size
@@ -130,7 +130,7 @@
 					</div>
 				</div>
 
-				<div class="p-b-45">
+				<div class="p-b-30">
 					
 					<span class="s-text8">Category: {{prod.category}}</span>
 				</div>
@@ -183,10 +183,10 @@
 	<!-- Relate Product -->
 	<section class="relateproduct bgwhite p-t-45 p-b-70 d-none d-lg-block">
 		<div class="container">
-			<div class="sec-title p-b-60">
-				<h3 class="m-text5 t-center">
+			<div class="sec-title p-b-30">
+				<h4 class="t-center">
 					Related Products
-				</h3>
+				</h4>
 			</div>
 
 			<!-- Slide2 -->
@@ -199,7 +199,7 @@
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="{% static 'images/item-02.jpg' %}" alt="IMG-PRODUCT">
+								<img src="{{item.image.url}}" alt="IMG-PRODUCT">
 
 								<div class="block2-overlay trans-0-4">
 									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -239,7 +239,7 @@
 
 
 
-	<div class="container bgwhite p-t-35 p-b-40 d-lg-none">
+	<div class="container bgwhite p-t-35 p-b-20 d-lg-none">
 		<div class="flex-w flex-sb">
 			<div class="w-size13 p-t-30 respon5">
 				<div class="wrap-slick3 flex-sb flex-w">
@@ -391,10 +391,10 @@
 	<!-- Relate Product -->
 	<section class="relateproduct bgwhite p-t-45 p-b-70 d-lg-none">
 		<div class="container">
-			<div class="sec-title p-b-60">
-				<h3 class="m-text5 t-center">
+			<div class="sec-title p-b-30">
+				<h4 class="t-center">
 					Related Products
-				</h3>
+				</h4>
 			</div>
 
 			<!-- Slide2 -->
@@ -407,7 +407,7 @@
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="{% static 'images/item-02.jpg' %}" alt="IMG-PRODUCT" style="min-height:200px; max-height: 250px;>
+								<img src="{{item.image.url}}" alt="IMG-PRODUCT" style="min-height:200px; max-height: 250px;>
 
 								<div class="block2-overlay trans-0-4">
 									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
