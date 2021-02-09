@@ -76,7 +76,7 @@ Home
 	</section>
 
 	<!-- Banner -->
-	<section class="banner bgwhite p-t-40 p-b-40">
+	<section class="banner bgwhite p-t-40 p-b-40 d-none d-lg-block">
 		<div class="container">
 			<div class="row">
 				{% for cat in category %}
@@ -105,9 +105,38 @@ Home
 			</div>
 		</div>
 	</section>
+	<section class="banner bgwhite p-t-40 p-b-40 d-lg-none">
+		<div class="container">
+			<div class="row">
+				{% for cat in category %}
+				<a href="{% url 'cat_detail' cat.id %}">
+				<div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
+					<!-- block1 -->
+					
+					
+					<div class=" hov-img-zoom pos-relative m-b-30">
+						<img src="{{cat.image.url}}" alt="IMG-BENNER" style="min-height: 220px; max-height: 270px;">
+
+						<div class="block1-wrapbtn w-size2">
+							<!-- Button -->
+							<a href="{% url 'cat_detail' cat.id %}" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+								{{cat.name}}
+							</a>
+						</div>
+					</div>
+					
+					
+
+					
+				</div>
+				</a>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
 
 	<!-- New Product -->
-	<section class="newproduct bgwhite p-t-35 p-b-105">
+	<section class="newproduct bgwhite p-t-35 p-b-30 d-none d-lg-block">
 		<div class="container">
 			<div class="sec-title p-b-40">
 				<a href="{% url 'featured' %}"><h3 class="m-text5 t-center">
@@ -161,11 +190,65 @@ Home
 
 		</div>
 	</section>
+	<section class="newproduct bgwhite p-t-35 p-b-30 d-lg-none">
+		<div class="container">
+			<div class="sec-title p-b-40">
+				<a href="{% url 'featured' %}"><h3 class="m-text5 t-center">
+					Featured Products
+				</h3></a>
+			</div>
+
+			<!-- slide2 -->
+			<div class="wrap-slick2">
+				<div class="slick2">
+
+					{% for item in featured %}
+					
+					<div class="item-slick2 p-l-15 p-r-15 ">
+						<!-- Block2 -->
+						<div class="block2 ">
+							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew ">
+								<img src="{{item.image.url}}" alt="IMG-PRODUCT" style="max-height: 250px; min-height: 200px;">
+
+								<div class="block2-overlay trans-0-4">
+									<a href="{% url 'add_to_cart' item.id %}" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+										<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+									</a>
+
+									<div class="block2-btn-addcart w-size1 trans-0-4">
+										<!-- Button -->
+										<a href="{% url 'add_to_cart' item.id %}"><button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											Add to Cart
+										</button></a>
+									</div>
+								</div>
+							</div>
+						
+							<div class="block2-txt p-t-20">
+								<a href="{% url 'prod_detail' item.id %}" class="block2-name dis-block s-text3 p-b-5">
+									{{item.name}}
+								</a>
+
+								<span class="block2-price m-text6 p-r-5">
+									${{item.price}}
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					{% endfor %}
+
+				</div>
+			</div>
+
+		</div>
+	</section>
 
 
 	{% comment %} LATEST PRODUCTS {% endcomment %}
 	
-	<section class="newproduct bgwhite p-t-35 p-b-70">
+	<section class="newproduct bgwhite p-t-35 p-b-50  d-none d-lg-block">
 		<div class="container">
 			<div class="sec-title p-b-40">
 				<h3 class="m-text5 t-center">
@@ -183,6 +266,66 @@ Home
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
 								<img src="{{item.image.url}}" alt="IMG-PRODUCT">
+
+								<div class="block2-overlay trans-0-4">
+									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+										<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+									</a>
+
+									<div class="block2-btn-addcart w-size1 trans-0-4">
+										<!-- Button -->
+										<a href="{% url 'add_to_cart' item.id %}">
+										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											Add to Cart
+										</button>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="block2-txt p-t-20">
+								<a href="{% url 'prod_detail' item.id %}" class="block2-name dis-block s-text3 p-b-5">
+									{{item.name}}
+								</a>
+
+								<span class="block2-price m-text6 p-r-5">
+									${{item.price}}
+								</span>
+							</div>
+						</div>
+					</div>
+
+					
+					{% endfor %}
+
+				</div>
+			</div>
+
+			
+
+		</div>
+	</section>
+
+
+	<section class="newproduct bgwhite p-t-35 p-b-20 d-lg-none">
+		<div class="container">
+			<div class="sec-title p-b-40">
+				<h3 class="m-text5 t-center">
+					Latest Products
+				</h3>
+			</div>
+
+			<div class="wrap-slick2">
+				<div class="slick2">
+
+					{% for item in latest %}
+					
+					<div class="item-slick2 p-l-15 p-r-15">
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+								<img src="{{item.image.url}}" alt="IMG-PRODUCT" style="min-height: 200px; max-height:250px;">
 
 								<div class="block2-overlay trans-0-4">
 									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">

@@ -20,7 +20,7 @@
 
 
 	<!-- Content page -->
-	<section class="bgwhite p-t-55 p-b-65">
+	<section class="bgwhite p-t-55 p-b-65 d-none d-lg-block">
 		<div class="container">
 			<div class="row">
 
@@ -70,6 +70,116 @@
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
 									<img src="{{item.image.url}}" alt="IMG-PRODUCT" >
+
+									<div class="block2-overlay trans-0-4">
+										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+											<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+											<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+										</a>
+
+										<div class="block2-btn-addcart w-size1 trans-0-4">
+											<!-- Button -->
+											<a href="{% url 'add_to_cart' item.id %}">
+											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+												Add to Cart
+											</button>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<div class="block2-txt p-t-20">
+									<a href="{% url 'prod_detail' item.id %}" class="block2-name dis-block s-text3 p-b-5">
+										{{item.name}}
+									</a>
+
+									<span class="block2-price m-text6 p-r-5">
+										${{item.price}}
+									</span>
+								</div>
+							</div>
+						</div>
+
+					 
+					{% endfor %}
+					</div>
+						
+						
+
+						
+					
+
+
+
+					<!-- Pagination -->
+					<div class="pagination flex-m flex-w p-t-26">
+						{% if cat.has_previous %}
+							<a href="?page=1" class="item-pagination flex-c-m trans-0-4 active-pagination mr-4">first</a>
+							<a href="?page={{ cat.previous_page_number }}" class="mr-4">previous</a>
+						{% endif %}
+						
+						{% if  cat.has_next %}
+							<a href="?page={{ cat.next_page_number }}" class="item-pagination flex-c-m trans-0-4 mr-4">next</a>
+						
+            				<a href="?page={{ cat.paginator.num_pages }}">last &raquo;</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="bgwhite p-t-55 p-b-65 d-lg-none">
+		<div class="container">
+			<div class="row">
+
+
+
+
+				<div class="col-sm-12 col-md-12 col-lg-12 p-b-50">
+					<!--  -->
+					<div class="flex-sb-m flex-w p-b-35">
+						{% comment %} <div class="flex-w">
+							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+								<select class="selection-2" name="sorting">
+									<option>Default Sorting</option>
+									<option>Popularity</option>
+									<option>Price: low to high</option>
+									<option>Price: high to low</option>
+								</select>
+							</div>
+
+							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+								<select class="selection-2" name="sorting">
+									<option>Price</option>
+									<option>$0.00 - $50.00</option>
+									<option>$50.00 - $100.00</option>
+									<option>$100.00 - $150.00</option>
+									<option>$150.00 - $200.00</option>
+									<option>$200.00+</option>
+
+								</select>
+							</div>
+						</div> {% endcomment %}
+
+						<span class="s-text8 p-t-5 p-b-5 ml-auto">
+							Showing {{ cat.number }} of {{ cat.paginator.num_pages }} results
+						</span>
+					</div>
+
+					
+
+					<!-- Product -->
+					<div class="row">
+					{% for item in cat %}
+					
+					
+						<div class="col-sm-12 col-md-4 col-lg-3 p-b-50">
+							<!-- Block2 -->
+							<div class="block2">
+								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+									<img src="{{item.image.url}}" alt="IMG-PRODUCT" style="min-height:200px; max-height:250px;">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">

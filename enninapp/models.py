@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 class Category(models.Model):
 	name = models.CharField(max_length = 100)
@@ -42,8 +43,8 @@ class Brand(models.Model):
 
 
 class Product(models.Model):
-	name = models.CharField(max_length=255, unique=True)
-	slug = models.SlugField(max_length = 50, unique=True, help_text='Unique value for product page URl, created from name.')
+	name = models.CharField(max_length=255)
+	slug = models.CharField(max_length = 50, unique=False,blank=True, null=True)
 	brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
 	price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
 	new_price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
@@ -61,7 +62,9 @@ class Product(models.Model):
 	Updated_at = models.DateTimeField(auto_now_add=True)
 	discount_price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
+
 	
+
 
 
 
