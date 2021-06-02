@@ -30,5 +30,5 @@ s3transfer==0.3.4
 six==1.15.0
 sqlparse==0.4.1
 starlette==0.12.10
-urllib3==1.26.3
+urllib3==1.26.5
 whitenoise==5.2.0
