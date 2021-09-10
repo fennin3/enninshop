@@ -28,7 +28,7 @@ pytz==2017.2
 requests==2.20.0
 s3transfer==0.3.4
 six==1.15.0
-sqlparse==0.4.1
+sqlparse==0.4.2
 starlette==0.12.10
 urllib3==1.26.3
 whitenoise==5.2.0
